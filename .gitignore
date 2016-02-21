@@ -1,0 +1,14 @@
+.*.fetch
+.*.unpack
+.*.config
+.*.install
+.*.make
+.*.patch
+
+build/
+dists/
+maps_server/
+
+config.m4
+env.sh
+submakes/*.mak
