@@ -1,5 +1,0 @@
-gdbmerrno.lo: gdbmerrno.c ../autoconf.h gdbm.h
-
-../autoconf.h:
-
-gdbm.h:

@@ -1,5 +1,0 @@
-version.lo: version.c ../autoconf.h gdbm.h
-
-../autoconf.h:
-
-gdbm.h:

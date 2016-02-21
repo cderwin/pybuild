@@ -1,8 +1,0 @@
-display_name = "Metafone"
-library_name = "metafone"
-version = "0.5"
-author = "Alastair Houghton"
-author_email = "alastair@alastairs-place.net"
-license = "BSD"
-url = "https://github.com/al45tair/metaphone"
-description = "A Python implementation of the double metaphone algorithms."
