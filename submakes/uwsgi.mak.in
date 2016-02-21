@@ -1,0 +1,28 @@
+define(`R2_PKG', `uwsgi')dnl
+define(`R2_VERSION_MAJOR', `2.0')dnl
+define(`R2_VERSION', `R2_VERSION_MAJOR.8')dnl
+define(`R2_DIR', `R2_PKG-R2_VERSION')dnl
+define(`R2_DIST', `R2_PKG-R2_VERSION.tar.gz')dnl
+define(`R2_URL', `http://projects.unbit.it/downloads/R2_DIST')
+
+include(`r2.m4')
+R2_DEFAULT_RULES_NOINSTALL
+
+.uwsgi.patch: .uwsgi.unpack
+	cd build/$(uwsgi.dir) && \
+	patch -p0 -N < $(CWD)/patches/python-uwsgi.diff && \
+	touch $(CWD)/$@
+
+.uwsgi.make: .uwsgi.patch .setuptools.install .python27.install .gdbm.install
+	cd build/$(uwsgi.dir) && \
+	export CFLAGS=$(CFLAGS) && \
+	export LDFLAGS=$(LDFLAGS) && \
+	export LIBS="-lreadline -lncursesw -lgdbm -lgdbm_compat" && \
+	CC=gcc CPP=g++ python uwsgiconfig.py --build && \
+	touch $(CWD)/.uwsgi.make
+
+.uwsgi.install: .uwsgi.make
+	cd build/$(uwsgi.dir) && \
+	python setup.py install && \
+	touch $(CWD)/.uwsgi.install
+

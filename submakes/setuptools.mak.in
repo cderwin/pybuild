@@ -1,0 +1,21 @@
+define(`R2_PKG', `setuptools')dnl
+define(`R2_VERSION_MAJOR', `20.0')dnl
+# define(`R2_VERSION', `R2_VERSION_MAJOR.2')dnl
+define(`R2_VERSION', `R2_VERSION_MAJOR')dnl
+define(`R2_DIR', `R2_PKG-R2_VERSION')dnl
+define(`R2_DIST', `R2_PKG-R2_VERSION.tar.gz')dnl
+define(`R2_URL', `https://pypi.python.org/packages/source/s/setuptools/R2_DIST')dnl
+
+include(`r2.m4')
+R2_DEFAULT_RULES_NOINSTALL
+
+.setuptools.make: .setuptools.unpack .python27.install
+	cd build/$(setuptools.dir) && \
+	python setup.py build && \
+	touch $(CWD)/.setuptools.make
+
+.setuptools.install: .setuptools.make
+	cd build/$(setuptools.dir) && \
+	python setup.py install && \
+	touch $(CWD)/.setuptools.install
+

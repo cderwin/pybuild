@@ -1,0 +1,7 @@
+dbmdelete.lo: dbmdelete.c ../autoconf.h ndbm.h ../src/gdbm.h
+
+../autoconf.h:
+
+ndbm.h:
+
+../src/gdbm.h:

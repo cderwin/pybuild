@@ -1,0 +1,25 @@
+define(`R2_PKG', `ncurses')dnl
+define(`R2_VERSION', `5.9')dnl
+define(`R2_DIR', `R2_PKG-R2_VERSION')dnl
+define(`R2_DIST', `R2_DIR.tar.gz')dnl
+define(`R2_URL', `https://ftp.gnu.org/gnu/ncurses/R2_DIST')dnl
+
+include(`r2.m4')
+R2_DEFAULT_RULES_NOCONFIG
+
+.ncurses.args := \
+	--prefix=$(pfx) \
+	--with-shared \
+	--with-pkg-config-libdir=$(PKG_CONFIG_PATH) \
+	--enable-widec \
+	--without-cxx \
+	--without-cxx-binding \
+	--enable-static \
+	--enable-termcap \
+	--without-shared
+
+
+.ncurses.config: .ncurses.unpack
+	cd build/$(ncurses.dir) && \
+	CXX=$(CXX) CC=$(CC) CFLAGS="$(CFLAGS) -fPIC" CXXFLAGS="$(CFLAGS) -fPIC" ./configure $(.ncurses.args)  && \
+	touch $(CWD)/.ncurses.config

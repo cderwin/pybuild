@@ -1,0 +1,11 @@
+--- uwsgiconfig.py.orig	2015-09-24 16:55:57.719308917 +0000
++++ uwsgiconfig.py	2015-09-24 17:00:34.527299850 +0000
+@@ -546,7 +546,7 @@
+             t.join()
+ 
+     print("*** uWSGI linking ***")
+-    ldline = "%s -o %s %s %s %s" % (GCC, bin_name, ' '.join(uniq_warnings(ldflags)),
++    ldline = "%s -o %s %s %s %s -L../../maps_server/lib -lbz2 -lreadline -lncursesw -lgdbm -lgdbm_compat" % (GCC, bin_name, ' '.join(uniq_warnings(ldflags)),
+         ' '.join(map(add_o, gcc_list)), ' '.join(uniq_warnings(libs)))
+     print(ldline)
+     ret = os.system(ldline)

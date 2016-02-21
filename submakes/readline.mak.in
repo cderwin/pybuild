@@ -1,0 +1,24 @@
+define(`R2_PKG', `readline')dnl
+define(`R2_VERSION', `6.3')dnl
+define(`R2_DIR', `readline-R2_VERSION')dnl
+define(`R2_DIST', `R2_DIR.tar.gz')dnl
+define(`R2_URL', `ftp://ftp.gnu.org/pub/gnu/readline/R2_DIST')dnl
+
+include(`r2.m4')
+R2_DEFAULT_RULES_NOCONFIG
+
+.readline.args := \
+	       --prefix=$(pfx) \
+	       --enable-static \
+	       --disable-shared \
+	       --with-curses=$(pfx)
+
+.readline.patch: .readline.unpack
+	cd build/$(readline.dir) && \
+	cat $(CWD)/patches/readline63-* | patch -p0 && \
+	touch $(CWD)/$@
+
+.readline.config: .readline.patch .ncurses.install
+	cd build/$(readline.dir) && \
+	CC=$(CC) CXX=$(CXX) LDFLAGS="$(LDFLAGS)" CFLAGS="$(CFLAGS) -fPIC" CXXFLAGS="$(CFLAGS)" LIBS="-lncursesw" ./configure $(.readline.args)  && \
+	touch $(CWD)/$@

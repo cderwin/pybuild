@@ -1,0 +1,21 @@
+define(`R2_PKG', `sqlite')dnl
+define(`R2_VERSION', `3090200')dnl
+define(`R2_DIR', `R2_PKG-autoconf-R2_VERSION')dnl
+define(`R2_DIST', `R2_DIR.tar.gz')dnl
+define(`R2_URL', `http://www.sqlite.org/2015/R2_DIST')dnl
+
+include(`r2.m4')
+R2_DEFAULT_RULES_NOCONFIG
+
+sqlite.args := \
+	--prefix=$(pfx) \
+	--with-pkg-config-libdir=$(PKG_CONFIG_PATH) \
+	--enable-static \
+	--without-shared \
+	--disable-shared
+
+.sqlite.config: .sqlite.unpack
+	cd build/$(sqlite.dir) && \
+	CXX=$(CXX) CC=$(CC) CFLAGS="$(CFLAGS) -fPIC" CXXFLAGS="$(CFLAGS) -fPIC" ./configure $(sqlite.args)  && \
+	touch $(CWD)/.sqlite.config
+

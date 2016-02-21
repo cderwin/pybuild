@@ -1,0 +1,28 @@
+--- libffi-3.2.1/configure.orig	2015-10-29 15:10:01.541932004 +0000
++++ libffi-3.2.1/configure	2015-10-29 15:10:51.997930352 +0000
+@@ -18725,11 +18725,6 @@
+     toolexecdir="${libdir}"/gcc-lib/'$(target_alias)'
+     toolexeclibdir="${libdir}"
+   fi
+-  multi_os_directory=`$CC $CFLAGS -print-multi-os-directory`
+-  case $multi_os_directory in
+-    .) ;; # Avoid trailing /.
+-    ../*) toolexeclibdir=$toolexeclibdir/$multi_os_directory ;;
+-  esac
+ 
+ else
+   toolexeclibdir="${libdir}"
+--- libffi-3.2.1/configure.ac.orig	2015-10-29 15:10:10.789931701 +0000
++++ libffi-3.2.1/configure.ac	2015-10-29 15:11:04.229929951 +0000
+@@ -601,11 +601,6 @@
+     toolexecdir="${libdir}"/gcc-lib/'$(target_alias)'
+     toolexeclibdir="${libdir}"
+   fi
+-  multi_os_directory=`$CC $CFLAGS -print-multi-os-directory`
+-  case $multi_os_directory in
+-    .) ;; # Avoid trailing /.
+-    ../*) toolexeclibdir=$toolexeclibdir/$multi_os_directory ;;
+-  esac
+   AC_SUBST(toolexecdir)
+ else
+   toolexeclibdir="${libdir}"

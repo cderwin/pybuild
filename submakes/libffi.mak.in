@@ -1,0 +1,25 @@
+define(`R2_PKG', `libffi')dnl
+define(`R2_VERSION', `3.2.1')dnl
+define(`R2_DIR', `libffi-R2_VERSION')dnl
+define(`R2_DIST', `R2_DIR.tar.gz')dnl
+define(`R2_URL', `ftp://sourceware.org/pub/libffi/R2_DIST')dnl
+
+include(`r2.m4')
+R2_DEFAULT_RULES_NOCONFIG
+
+.libffi.args := \
+	       --prefix=$(pfx) \
+	       --enable-static \
+	       --disable-shared \
+	       --libdir=$(pfx)/lib \
+	       --includedir=$(pfx)/include
+
+.libffi.patch: .libffi.unpack
+	cd build/$(libffi.dir) && \
+	patch -p1 < ../../patches/libffi-3.2.1-no-lib64.patch && \
+	touch $(CWD)/$@
+
+.libffi.config: .libffi.patch
+	cd build/$(libffi.dir) && \
+	CC=$(CC) CXX=$(CXX) LDFLAGS="$(LDFLAGS)" CFLAGS="$(CFLAGS) -fPIC" CXXFLAGS="$(CFLAGS)" ./configure $(.libffi.args)  && \
+	touch $(CWD)/$@

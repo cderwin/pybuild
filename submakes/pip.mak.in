@@ -1,0 +1,20 @@
+define(`R2_PKG', `pip')dnl
+define(`R2_VERSION_MAJOR', `8.0')dnl
+define(`R2_VERSION', `R2_VERSION_MAJOR.2')dnl
+define(`R2_DIR', `R2_PKG-R2_VERSION')dnl
+define(`R2_DIST', `R2_PKG-R2_VERSION.tar.gz')dnl
+define(`R2_URL', `https://pypi.python.org/packages/source/p/pip/R2_DIST')dnl
+
+include(`r2.m4')
+R2_DEFAULT_RULES_NOINSTALL
+
+.pip.make: .pip.unpack .setuptools.install
+	cd build/$(pip.dir) && \
+	python setup.py build && \
+	touch $(CWD)/.pip.make
+
+.pip.install: .pip.make
+	cd build/$(pip.dir) && \
+	python setup.py install && \
+	touch $(CWD)/.pip.install
+

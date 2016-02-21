@@ -1,0 +1,19 @@
+define(`R2_PKG', `gdbm')dnl
+define(`R2_VERSION', `1.9.1')dnl
+define(`R2_DIR', `gdbm-R2_VERSION')dnl
+define(`R2_DIST', `R2_DIR.tar.gz')dnl
+define(`R2_URL', `ftp://ftp.gnu.org/pub/gnu/gdbm/R2_DIST')dnl
+
+include(`r2.m4')
+R2_DEFAULT_RULES_NOCONFIG
+
+.gdbm.args := \
+	       --prefix=$(pfx) \
+	       --enable-libgdbm-compat \
+	       --enable-static \
+	       --disable-shared
+
+.gdbm.config: .gdbm.unpack .ncurses.install
+	cd build/$(gdbm.dir) && \
+	CC=$(CC) CXX=$(CXX) LDFLAGS="$(LDFLAGS)" CFLAGS="$(CFLAGS) -fPIC" CXXFLAGS="$(CFLAGS)" ./configure $(.gdbm.args)  && \
+	touch $(CWD)/.gdbm.config

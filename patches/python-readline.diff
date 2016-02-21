@@ -1,0 +1,11 @@
+--- Python-2.7.10/Modules/Setup~	2015-09-23 23:52:52.000000000 +0000
++++ Python-2.7.10/Modules/Setup	2015-09-24 02:07:24.000000000 +0000
+@@ -163,7 +163,7 @@
+ # it, depending on your system -- see the GNU readline instructions.
+ # It's okay for this to be a shared library, too.
+ 
+-#readline readline.c -lreadline -ltermcap
++readline readline.c -lreadline -ltermcap -lncursesw
+ 
+ 
+ # Modules that should always be present (non UNIX dependent):

@@ -1,0 +1,55 @@
+define(`R2_PKG', `python27')dnl
+define(`R2_VERSION_MAJOR', `2.7')dnl
+define(`R2_VERSION', `R2_VERSION_MAJOR.10')dnl
+define(`R2_DIR', `Python-R2_VERSION')dnl
+define(`R2_DIST', `Python-R2_VERSION.tar.xz')dnl
+define(`R2_URL', `https://www.python.org/ftp/python/R2_VERSION/R2_DIST')dnl
+
+include(`r2.m4')
+R2_DEFAULT_RULES_NOINSTALL
+
+.python27.args := \
+	--prefix=$(pfx)
+
+.python27.patch: .python27.unpack
+	cd R2_BUILD/$(python27.dir) && \
+	patch -p1 < ../../patches/python-ssl.diff && \
+	touch $(CWD)/$@
+
+.python27.config: .python27.patch .libffi.install .bzip2.install .openssl.install .readline.install .ncurses.install .gdbm.install .sqlite.install
+	cd R2_BUILD/$(python27.dir) && \
+	export PYTHON_OPENSSL=$(pfx) && \
+	CC=$(CC) \
+	CXX=$(CXX) \
+	LDFLAGS="$(LDFLAGS)" \
+	LDSHARED=$(LDSHARED) \
+	DYLD_LIBRARY_PATH=$(DYLD_LIBRARY_PATH) \
+	CFLAGS="$(CFLAGS) -I$(pfx)/include/ncurses -I$(pfx)/include" \
+	CXXFLAGS="$(CFLAGS)" && \
+	echo "bz2 bz2module.c -I$(pfx)/include -L$(pfx)/lib -lbz2" >> Modules/Setup.local && \
+	echo "readline readline.c  -I$(pfx)/include -L$(pfx)/lib  -lreadline -lncursesw" >> Modules/Setup.local && \
+	echo "gdbm gdbmmodule.c -I$(pfx)/include -L$(pfx)/lib -lgdbm" >> Modules/Setup.local && \
+	echo "dbm dbmmodule.c -DHAVE_GDBM_H=1 -I$(pfx)/include -L$(pfx)/lib -lgdbm_compat" >> Modules/Setup.local && \
+	echo "_sqlite  -I$(pfx)/include -L$(pfx)/lib -I$$(srcdir)/Modules/_sqlite _sqlite/cache.c _sqlite/cursor.c _sqlite/module.c _sqlite/row.c _sqlite/util.c _sqlite/connection.c _sqlite/microprotocols.c _sqlite/prepare_protocol.c _sqlite/statement.c  -lsqlite3 -DMODULE_NAME=sqlite3" >> Modules/Setup.local && \
+	 ./configure $(.python27.args)  && \
+	touch $(CWD)/$@
+
+#	patch -p1 < ../../patches/python-readline.diff && \
+
+# Need to iron out the ndbm header detection crap here
+
+
+.python27.make: .python27.config
+	cd build/$(python27.dir) && \
+	export PYTHON_OPENSSL=$(pfx) && \
+	CFLAGS="$(CFLAGS) -I$(pfx)/include/ncurses -I$(pfx)/include -D__PTHREAD_SPINS=0" \
+	DYLD_LIBRARY_PATH=$(DYLD_LIBRARY_PATH) $(MAKE) -j4  && \
+	touch $(CWD)/.python27.make
+
+.python27.install: .python27.make
+	cd build/$(python27.dir) && \
+	export PYTHON_OPENSSL=$(pfx) && \
+	DYLD_LIBRARY_PATH=$(DYLD_LIBRARY_PATH) \
+	make install $(DEST) && \
+	touch $(CWD)/.python27.install
+

@@ -1,0 +1,17 @@
+define(`R2_PKG', `zlib')dnl
+define(`R2_VERSION', `1.2.8')dnl
+define(`R2_DIR', `R2_PKG-R2_VERSION')dnl
+define(`R2_DIST', `R2_DIR.tar.gz')dnl
+define(`R2_URL', `http://zlib.net/R2_DIST')dnl
+
+include(`r2.m4')
+R2_DEFAULT_RULES_NOCONFIG
+
+.zlib.args := \
+	--prefix=$(pfx) \
+        --static
+
+.zlib.config: .zlib.unpack
+	cd build/$(zlib.dir) && \
+	CC=$(CC) CXX=$(CXX) LDFLAGS="$(LDFLAGS)" CFLAGS="$(CFLAGS) -fPIC" CXXFLAGS="$(CFLAGS)" ./configure $(.zlib.args)  && \
+	touch $(CWD)/.zlib.config

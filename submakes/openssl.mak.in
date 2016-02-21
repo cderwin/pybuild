@@ -1,0 +1,56 @@
+define(`R2_PKG', `openssl')dnl
+define(`R2_VERSION', `1.0.2f')dnl
+define(`R2_DIR', `R2_PKG-R2_VERSION')dnl
+define(`R2_DIST', `R2_DIR.tar.gz')dnl
+define(`R2_URL', `ftp://ftp.openssl.org/source/R2_DIST')dnl
+
+include(`r2.m4')
+
+R2_DECLS
+R2_RULE_FETCH
+R2_RULE_UNPACK
+
+UNAME := $(shell uname)
+
+EXTRA_CFG=linux-x86_64
+ifeq ($(UNAME), Darwin)
+     EXTRA_CFG=shared darwin64-x86_64-cc
+endif
+
+.openssl.args := \
+	$(EXTRA_CFG) \
+	--prefix=$(pfx) \
+	--openssldir=$(pfx)/openssl \
+	no-shared \
+	-fPIC
+
+#.openssl.config: .openssl.unpack .zlib.install
+#	cd R2_BUILD/$(openssl.dir) && \
+#	CC=$(CC) CXX=$(CXX) CFLAGS="$(CFLAGS)" CXXFLAGS="$(CFLAGS)" ./config $(.openssl.args)  && \
+#	touch $(CWD)/$@
+
+.openssl.config: .openssl.unpack .zlib.install
+	cd R2_BUILD/$(openssl.dir) && \
+#	CC=$(CC) CXX=$(CXX) CFLAGS="$(CFLAGS) -fPIC" CXXFLAGS="$(CFLAGS)" ./config $(.openssl.args)  && \
+	CC=$(CC) CXX=$(CXX) CFLAGS="$(CFLAGS) -fPIC" CXXFLAGS="$(CFLAGS)" ./Configure $(.openssl.args)  && \
+	touch $(CWD)/$@
+
+.openssl.make: .openssl.config
+	cd R2_BUILD/$(openssl.dir) && \
+	$(MAKE) -j4 && \
+	touch $(CWD)/$@
+
+# the install target includes install_doc, which is fucked up
+.openssl.install: .openssl.make
+	cd build/$(openssl.dir) && \
+	make install_sw $(DEST) && \
+	touch $(CWD)/.openssl.install
+
+.R2_PKG.clean:
+	rm -rf R2_BUILD/$(R2_PKG.dir) .R2_PKG.*
+GLOBAL_CLEAN += .R2_PKG.clean
+
+.R2_PKG.distclean:
+	rm -f R2_DISTS/$(R2_PKG.tgz)
+
+GLOBAL_DISTCLEAN += .R2_PKG.distclean

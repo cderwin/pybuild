@@ -1,0 +1,36 @@
+define(`R2_PKG', `bzip2')dnl
+define(`R2_VERSION', `1.0.6')dnl
+define(`R2_DIR', `R2_PKG-R2_VERSION')dnl
+define(`R2_DIST', `R2_DIR.tar.gz')dnl
+define(`R2_URL', `ftp://xmlsoft.org/bzip2/R2_DIST')dnl
+define(`R2_URL', `http://www.bzip.org/R2_VERSION/R2_DIST')dnl
+
+include(`r2.m4')
+R2_DECLS
+R2_RULE_FETCH
+R2_RULE_UNPACK
+
+.bzip2.config: .bzip2.unpack 
+	cd R2_BUILD/$(bzip2.dir) && \
+#	CC=$(CC) CXX=$(CXX) CFLAGS="$(CFLAGS) -fPIC" CXXFLAGS="$(CFLAGS)" ./Configure $(.bzip2.args)  && \
+	touch $(CWD)/$@
+
+.bzip2.make: .bzip2.config
+	cd R2_BUILD/$(bzip2.dir) && \
+	$(MAKE) && \
+	touch $(CWD)/$@
+
+# the install target includes install_doc, which is fucked up
+.bzip2.install: .bzip2.make
+	cd build/$(bzip2.dir) && \
+	make install PREFIX=$(pfx) && \
+	touch $(CWD)/.bzip2.install
+
+.R2_PKG.clean:
+	rm -rf R2_BUILD/$(R2_PKG.dir) .R2_PKG.*
+GLOBAL_CLEAN += .R2_PKG.clean
+
+.R2_PKG.distclean:
+	rm -f R2_DISTS/$(R2_PKG.tgz)
+
+GLOBAL_DISTCLEAN += .R2_PKG.distclean

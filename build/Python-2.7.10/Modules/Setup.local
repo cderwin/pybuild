@@ -1,0 +1,5 @@
+bz2 bz2module.c -I/sandbox/maps/maps_server/include -L/sandbox/maps/maps_server/lib -lbz2
+readline readline.c  -I/sandbox/maps/maps_server/include -L/sandbox/maps/maps_server/lib  -lreadline -lncursesw
+gdbm gdbmmodule.c -I/sandbox/maps/maps_server/include -L/sandbox/maps/maps_server/lib -lgdbm
+dbm dbmmodule.c -DHAVE_GDBM_H=1 -I/sandbox/maps/maps_server/include -L/sandbox/maps/maps_server/lib -lgdbm_compat
+_sqlite  -I/sandbox/maps/maps_server/include -L/sandbox/maps/maps_server/lib -I/Modules/_sqlite _sqlite/cache.c _sqlite/cursor.c _sqlite/module.c _sqlite/row.c _sqlite/util.c _sqlite/connection.c _sqlite/microprotocols.c _sqlite/prepare_protocol.c _sqlite/statement.c  -lsqlite3 -DMODULE_NAME=sqlite3
