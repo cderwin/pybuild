@@ -31,7 +31,6 @@ endif
 
 .openssl.config: .openssl.unpack .zlib.install
 	cd R2_BUILD/$(openssl.dir) && \
-#	CC=$(CC) CXX=$(CXX) CFLAGS="$(CFLAGS) -fPIC" CXXFLAGS="$(CFLAGS)" ./config $(.openssl.args)  && \
 	CC=$(CC) CXX=$(CXX) CFLAGS="$(CFLAGS) -fPIC" CXXFLAGS="$(CFLAGS)" ./Configure $(.openssl.args)  && \
 	touch $(CWD)/$@
 

@@ -12,7 +12,6 @@ R2_RULE_UNPACK
 
 .bzip2.config: .bzip2.unpack 
 	cd R2_BUILD/$(bzip2.dir) && \
-#	CC=$(CC) CXX=$(CXX) CFLAGS="$(CFLAGS) -fPIC" CXXFLAGS="$(CFLAGS)" ./Configure $(.bzip2.args)  && \
 	touch $(CWD)/$@
 
 .bzip2.make: .bzip2.config
