@@ -1,6 +1,6 @@
 define(`R2_PKG', `python27')dnl
-define(`R2_VERSION_MAJOR', `2.7')dnl
-define(`R2_VERSION', `R2_VERSION_MAJOR.11')dnl
+define(`R2_VERSION_MAJOR', `3.5')dnl
+define(`R2_VERSION', `R2_VERSION_MAJOR.1')dnl
 define(`R2_DIR', `Python-R2_VERSION')dnl
 define(`R2_DIST', `Python-R2_VERSION.tar.xz')dnl
 define(`R2_URL', `https://www.python.org/ftp/python/R2_VERSION/R2_DIST')dnl
@@ -26,10 +26,10 @@ R2_DEFAULT_RULES_NOINSTALL
 	DYLD_LIBRARY_PATH=$(DYLD_LIBRARY_PATH) \
 	CFLAGS="$(CFLAGS) -I$(pfx)/include/ncurses -I$(pfx)/include" \
 	CXXFLAGS="$(CFLAGS)" && \
-	echo "bz2 bz2module.c -I$(pfx)/include -L$(pfx)/lib -lbz2" >> Modules/Setup.local && \
+	echo "_bz2 _bz2module.c -I$(pfx)/include -L$(pfx)/lib -lbz2" >> Modules/Setup.local && \
 	echo "readline readline.c  -I$(pfx)/include -L$(pfx)/lib  -lreadline -lncursesw" >> Modules/Setup.local && \
-	echo "gdbm gdbmmodule.c -I$(pfx)/include -L$(pfx)/lib -lgdbm" >> Modules/Setup.local && \
-	echo "dbm dbmmodule.c -DHAVE_GDBM_H=1 -I$(pfx)/include -L$(pfx)/lib -lgdbm_compat" >> Modules/Setup.local && \
+	echo "_gdbm _gdbmmodule.c -I$(pfx)/include -L$(pfx)/lib -lgdbm" >> Modules/Setup.local && \
+	echo "_dbm _dbmmodule.c -DHAVE_GDBM_H=1 -I$(pfx)/include -L$(pfx)/lib -lgdbm_compat" >> Modules/Setup.local && \
 	echo "_sqlite  -I$(pfx)/include -L$(pfx)/lib -I$$(srcdir)/Modules/_sqlite _sqlite/cache.c _sqlite/cursor.c _sqlite/module.c _sqlite/row.c _sqlite/util.c _sqlite/connection.c _sqlite/microprotocols.c _sqlite/prepare_protocol.c _sqlite/statement.c  -lsqlite3 -DMODULE_NAME=sqlite3" >> Modules/Setup.local && \
 	 ./configure $(.python27.args)  && \
 	touch $(CWD)/$@
@@ -51,5 +51,6 @@ R2_DEFAULT_RULES_NOINSTALL
 	export PYTHON_OPENSSL=$(pfx) && \
 	DYLD_LIBRARY_PATH=$(DYLD_LIBRARY_PATH) \
 	make install $(DEST) && \
+	ln -s $(pfx)/bin/python3 $(pfx)/bin/python && \
 	touch $(CWD)/.python27.install
 

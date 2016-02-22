@@ -5,7 +5,7 @@
  
      print("*** uWSGI linking ***")
 -    ldline = "%s -o %s %s %s %s" % (GCC, bin_name, ' '.join(uniq_warnings(ldflags)),
-+    ldline = "%s -o %s %s %s %s -L../../maps_server/lib -lbz2 -lreadline -lncursesw -lgdbm -lgdbm_compat" % (GCC, bin_name, ' '.join(uniq_warnings(ldflags)),
++    ldline = "%s -o %s %s %s %s -L../../build/lib -lbz2 -lreadline -lncursesw -lgdbm -lgdbm_compat" % (GCC, bin_name, ' '.join(uniq_warnings(ldflags)),
          ' '.join(map(add_o, gcc_list)), ' '.join(uniq_warnings(libs)))
      print(ldline)
      ret = os.system(ldline)
