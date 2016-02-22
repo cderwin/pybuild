@@ -1,11 +1,11 @@
 SHELL := bash
 ME := maps
 CWD := $(CURDIR)
-pfx := $(CWD)/$(ME)_server
+pfx := $(CWD)/build
 
 SHASUM := sha1sum
 ROOT:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-BUILDDIR := $(ROOT)/build
+BUILDDIR := $(ROOT)/src
 
 DEST :=
 SUBMAKES := $(wildcard submakes/*.mak.in)
@@ -38,11 +38,7 @@ LDFLAGS := -L$(pfx)/lib $(ARCHFLAGS)
 
 all: r2.deps .uwsgi.install
 
-clean:
-	@rm -f .*.ts env.sh && \
-	find . -name "*.pyc" -delete
-
-distclean: $(GLOBAL_CLEAN) clean
+distclean: $(GLOBAL_CLEAN)
 	rm -fv .*.{config,make,fetch,install,unpack,patch}
 	rm -rf $(pfx)
 	rm -rf $(BUILDDIR) dist
@@ -51,10 +47,10 @@ distclean: $(GLOBAL_CLEAN) clean
 
 
 $(ME).tar.gz: MANIFEST.sha1
-	tar cvzf $@ $(ME)_server
+	tar cvzf $@ $(pfx)
 
 MANIFEST.sha1: all
-	find $(ME)_server -type f -exec $(SHASUM) {} \; > $@
+	find $(pfx) -type f -exec $(SHASUM) {} \; > $@
 
 release: all $(ME).tar.gz
 
@@ -68,7 +64,7 @@ release: all $(ME).tar.gz
 	chmod 755 $(@D)
 	touch $@
 
-r2.deps: dists/.exist build/.exist $(OSDEPS) env.sh
+r2.deps: dists/.exist $(BUILDDIR)/.exist $(OSDEPS) env.sh
 
 env.sh: config.m4 env.sh.in
 	m4 $^ > $@

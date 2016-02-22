@@ -10,12 +10,12 @@ include(`r2.m4')
 R2_DEFAULT_RULES_NOINSTALL
 
 .setuptools.make: .setuptools.unpack .python27.install
-	cd build/$(setuptools.dir) && \
+	cd R2_BUILD/$(setuptools.dir) && \
 	python setup.py build && \
 	touch $(CWD)/.setuptools.make
 
 .setuptools.install: .setuptools.make
-	cd build/$(setuptools.dir) && \
+	cd R2_BUILD/$(setuptools.dir) && \
 	python setup.py install && \
 	touch $(CWD)/.setuptools.install
 

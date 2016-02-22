@@ -1,6 +1,6 @@
 define(`R2_PKG', `python27')dnl
 define(`R2_VERSION_MAJOR', `2.7')dnl
-define(`R2_VERSION', `R2_VERSION_MAJOR.10')dnl
+define(`R2_VERSION', `R2_VERSION_MAJOR.11')dnl
 define(`R2_DIR', `Python-R2_VERSION')dnl
 define(`R2_DIST', `Python-R2_VERSION.tar.xz')dnl
 define(`R2_URL', `https://www.python.org/ftp/python/R2_VERSION/R2_DIST')dnl
@@ -40,14 +40,14 @@ R2_DEFAULT_RULES_NOINSTALL
 
 
 .python27.make: .python27.config
-	cd build/$(python27.dir) && \
+	cd R2_BUILD/$(python27.dir) && \
 	export PYTHON_OPENSSL=$(pfx) && \
 	CFLAGS="$(CFLAGS) -I$(pfx)/include/ncurses -I$(pfx)/include -D__PTHREAD_SPINS=0" \
 	DYLD_LIBRARY_PATH=$(DYLD_LIBRARY_PATH) $(MAKE) -j4  && \
 	touch $(CWD)/.python27.make
 
 .python27.install: .python27.make
-	cd build/$(python27.dir) && \
+	cd R2_BUILD/$(python27.dir) && \
 	export PYTHON_OPENSSL=$(pfx) && \
 	DYLD_LIBRARY_PATH=$(DYLD_LIBRARY_PATH) \
 	make install $(DEST) && \

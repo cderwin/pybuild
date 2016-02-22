@@ -1,5 +1,5 @@
 define(`R2_DISTS', `dists')dnl
-define(`R2_BUILD', `build')dnl
+define(`R2_BUILD', `src')dnl
 define(`R2_SHA1DIR', `shasums')dnl
 define(`R2_DECLS',
 R2_PKG.version := R2_VERSION

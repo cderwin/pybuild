@@ -9,12 +9,12 @@ include(`r2.m4')
 R2_DEFAULT_RULES_NOINSTALL
 
 .uwsgi.patch: .uwsgi.unpack
-	cd build/$(uwsgi.dir) && \
+	cd R2_BUILD/$(uwsgi.dir) && \
 	patch -p0 -N < $(CWD)/patches/python-uwsgi.diff && \
 	touch $(CWD)/$@
 
 .uwsgi.make: .uwsgi.patch .setuptools.install .python27.install .gdbm.install
-	cd build/$(uwsgi.dir) && \
+	cd R2_BUILD/$(uwsgi.dir) && \
 	export CFLAGS=$(CFLAGS) && \
 	export LDFLAGS=$(LDFLAGS) && \
 	export LIBS="-lreadline -lncursesw -lgdbm -lgdbm_compat" && \
@@ -22,7 +22,7 @@ R2_DEFAULT_RULES_NOINSTALL
 	touch $(CWD)/.uwsgi.make
 
 .uwsgi.install: .uwsgi.make
-	cd build/$(uwsgi.dir) && \
+	cd R2_BUILD/$(uwsgi.dir) && \
 	python setup.py install && \
 	touch $(CWD)/.uwsgi.install
 

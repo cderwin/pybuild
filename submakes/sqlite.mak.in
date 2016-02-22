@@ -15,7 +15,7 @@ sqlite.args := \
 	--disable-shared
 
 .sqlite.config: .sqlite.unpack
-	cd build/$(sqlite.dir) && \
+	cd R2_BUILD/$(sqlite.dir) && \
 	CXX=$(CXX) CC=$(CC) CFLAGS="$(CFLAGS) -fPIC" CXXFLAGS="$(CFLAGS) -fPIC" ./configure $(sqlite.args)  && \
 	touch $(CWD)/.sqlite.config
 

@@ -12,6 +12,6 @@ R2_DEFAULT_RULES_NOCONFIG
         --static
 
 .zlib.config: .zlib.unpack
-	cd build/$(zlib.dir) && \
+	cd R2_BUILD/$(zlib.dir) && \
 	CC=$(CC) CXX=$(CXX) LDFLAGS="$(LDFLAGS)" CFLAGS="$(CFLAGS) -fPIC" CXXFLAGS="$(CFLAGS)" ./configure $(.zlib.args)  && \
 	touch $(CWD)/.zlib.config

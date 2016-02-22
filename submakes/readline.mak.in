@@ -14,11 +14,11 @@ R2_DEFAULT_RULES_NOCONFIG
 	       --with-curses=$(pfx)
 
 .readline.patch: .readline.unpack
-	cd build/$(readline.dir) && \
+	cd R2_BUILD/$(readline.dir) && \
 	cat $(CWD)/patches/readline63-* | patch -p0 && \
 	touch $(CWD)/$@
 
 .readline.config: .readline.patch .ncurses.install
-	cd build/$(readline.dir) && \
+	cd R2_BUILD/$(readline.dir) && \
 	CC=$(CC) CXX=$(CXX) LDFLAGS="$(LDFLAGS)" CFLAGS="$(CFLAGS) -fPIC" CXXFLAGS="$(CFLAGS)" LIBS="-lncursesw" ./configure $(.readline.args)  && \
 	touch $(CWD)/$@

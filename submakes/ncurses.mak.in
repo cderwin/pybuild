@@ -20,6 +20,6 @@ R2_DEFAULT_RULES_NOCONFIG
 
 
 .ncurses.config: .ncurses.unpack
-	cd build/$(ncurses.dir) && \
+	cd R2_BUILD/$(ncurses.dir) && \
 	CXX=$(CXX) CC=$(CC) CFLAGS="$(CFLAGS) -fPIC" CXXFLAGS="$(CFLAGS) -fPIC" ./configure $(.ncurses.args)  && \
 	touch $(CWD)/.ncurses.config

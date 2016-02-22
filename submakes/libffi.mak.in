@@ -15,11 +15,11 @@ R2_DEFAULT_RULES_NOCONFIG
 	       --includedir=$(pfx)/include
 
 .libffi.patch: .libffi.unpack
-	cd build/$(libffi.dir) && \
+	cd $(BUILDDIR)/$(libffi.dir) && \
 	patch -p1 < ../../patches/libffi-3.2.1-no-lib64.patch && \
 	touch $(CWD)/$@
 
 .libffi.config: .libffi.patch
-	cd build/$(libffi.dir) && \
+	cd $(BUILDDIR)/$(libffi.dir) && \
 	CC=$(CC) CXX=$(CXX) LDFLAGS="$(LDFLAGS)" CFLAGS="$(CFLAGS) -fPIC" CXXFLAGS="$(CFLAGS)" ./configure $(.libffi.args)  && \
 	touch $(CWD)/$@

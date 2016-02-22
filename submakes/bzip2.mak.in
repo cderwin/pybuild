@@ -21,7 +21,7 @@ R2_RULE_UNPACK
 
 # the install target includes install_doc, which is fucked up
 .bzip2.install: .bzip2.make
-	cd build/$(bzip2.dir) && \
+	cd R2_BUILD/$(bzip2.dir) && \
 	make install PREFIX=$(pfx) && \
 	touch $(CWD)/.bzip2.install
 

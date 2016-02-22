@@ -14,6 +14,6 @@ R2_DEFAULT_RULES_NOCONFIG
 	       --disable-shared
 
 .gdbm.config: .gdbm.unpack .ncurses.install
-	cd build/$(gdbm.dir) && \
+	cd R2_BUILD/$(gdbm.dir) && \
 	CC=$(CC) CXX=$(CXX) LDFLAGS="$(LDFLAGS)" CFLAGS="$(CFLAGS) -fPIC" CXXFLAGS="$(CFLAGS)" ./configure $(.gdbm.args)  && \
 	touch $(CWD)/.gdbm.config

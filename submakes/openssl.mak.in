@@ -41,7 +41,7 @@ endif
 
 # the install target includes install_doc, which is fucked up
 .openssl.install: .openssl.make
-	cd build/$(openssl.dir) && \
+	cd R2_BUILD/$(openssl.dir) && \
 	make install_sw $(DEST) && \
 	touch $(CWD)/.openssl.install
 
