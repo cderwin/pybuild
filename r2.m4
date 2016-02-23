@@ -1,3 +1,4 @@
+define(`R2_PREFIX', `build')dnl
 define(`R2_DISTS', `dists')dnl
 define(`R2_BUILD', `src')dnl
 define(`R2_SHA1DIR', `shasums')dnl

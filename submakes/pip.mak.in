@@ -9,12 +9,12 @@ include(`r2.m4')
 R2_DEFAULT_RULES_NOINSTALL
 
 .pip.make: .pip.unpack .setuptools.install
-	cd build/$(pip.dir) && \
+	cd R2_BUILD/$(pip.dir) && \
 	python setup.py build && \
 	touch $(CWD)/.pip.make
 
 .pip.install: .pip.make
-	cd build/$(pip.dir) && \
+	cd R2_BUILD/$(pip.dir) && \
 	python setup.py install && \
 	touch $(CWD)/.pip.install
 
